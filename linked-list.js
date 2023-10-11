@@ -6,6 +6,7 @@ function LinkedList () {
   let sizeCount = 0;
   let listHead = null;
   let lastNode = null;
+  let listTail = null;
 
   const append = (value) => {
     sizeCount += 1;   
@@ -19,6 +20,7 @@ function LinkedList () {
       lastNode.nextNode = newNode;
       lastNode = newNode;
     }
+    listTail = newNode;
   }
 
   const prepend = (value) => {
@@ -30,8 +32,19 @@ function LinkedList () {
 
   const head = () => listHead;
 
+  const tail = () => listTail;
+
   const size = () => {
     return sizeCount;
+  }
+
+  const at = (index) => {
+    let tempNode = listHead;
+    for (let i = 0; i < index; i++) {
+      if (tempNode.nextNode === null) return 'Non exists.';
+      tempNode = tempNode.nextNode;
+    }
+    return tempNode;
   }
 
   const toString = () => {
@@ -48,7 +61,7 @@ function LinkedList () {
     console.log(string, 'null');
   }
 
-  return {append, head, size, toString, prepend}
+  return {append, head, size, toString, prepend, tail, at}
 }
 
 const list = LinkedList();
@@ -57,3 +70,7 @@ list.append('Node 1');
 list.append('Node 2'); 
 list.prepend('Node 3');
 list.toString(); // ( Node 3 ) -> ( Node 1 ) -> ( Node 2 ) -> null
+console.log(list.size()); // 3
+console.log(list.tail()); // { value: 'Node 2', nextNode: null }
+console.log(list.at(2)); // { value: 'Node 2', nextNode: null }
+console.log(list.at(5)); // Non exists.
