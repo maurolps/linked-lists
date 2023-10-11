@@ -21,6 +21,13 @@ function LinkedList () {
     }
   }
 
+  const prepend = (value) => {
+    sizeCount += 1;
+    newNode = Node(value);
+    newNode.nextNode = listHead;
+    listHead = newNode;
+  }
+
   const head = () => listHead;
 
   const size = () => {
@@ -41,12 +48,12 @@ function LinkedList () {
     console.log(string, 'null');
   }
 
-  return {append, head, size, toString}
+  return {append, head, size, toString, prepend}
 }
 
 const list = LinkedList();
 list.toString(); // Your list is empty
 list.append('Node 1');
 list.append('Node 2'); 
-list.append('Node 3');
-list.toString(); // ( Node 1 ) -> ( Node 2 ) -> ( Node 3 ) -> null
+list.prepend('Node 3');
+list.toString(); // ( Node 3 ) -> ( Node 1 ) -> ( Node 2 ) -> null
