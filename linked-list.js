@@ -73,7 +73,16 @@ function LinkedList () {
     listTail = tempNode;
   }
 
-  return {append, head, size, toString, prepend, tail, at, pop}
+  const contains = (value) => {
+    let tempNode = listHead;
+    while (tempNode != null) {
+      if (tempNode.value === value) return true;
+      tempNode = tempNode.nextNode;
+    }
+    return false;
+  }
+
+  return {append, head, size, toString, prepend, tail, at, pop, contains}
 }
 
 const list = LinkedList();
@@ -89,3 +98,5 @@ console.log(list.at(5)); // Non exists.
 list.toString(); // ( Node 3 ) -> ( Node 1 ) -> ( Node 2 ) -> null
 list.pop(); // remove the last Node
 list.toString(); // ( Node 3 ) -> ( Node 1 ) -> null
+console.log(list.contains('Node 1')); // true;
+console.log(list.contains('Node 5')); // false;
