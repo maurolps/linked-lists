@@ -4,20 +4,19 @@ function Node (value = null, nextNode = null) {
 
 function LinkedList () {
   let listHead = null;
-  let lastNode = null;
   let listTail = null;
 
   const append = (value) => {
     newNode = Node(value);
     if (listHead === null) {
       listHead = newNode;
-      lastNode = listHead;
       return;
     }
-    if (lastNode !== null) {
-      lastNode.nextNode = newNode;
-      lastNode = newNode;
+    let tempNode = listHead;
+    while (tempNode.nextNode != null) {
+      tempNode = tempNode.nextNode
     }
+    tempNode.nextNode = newNode;
     listTail = newNode;
   }
 
