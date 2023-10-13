@@ -3,13 +3,11 @@ function Node (value = null, nextNode = null) {
 }
 
 function LinkedList () {
-  let sizeCount = 0;
   let listHead = null;
   let lastNode = null;
   let listTail = null;
 
   const append = (value) => {
-    sizeCount += 1;   
     newNode = Node(value);
     if (listHead === null) {
       listHead = newNode;
@@ -24,7 +22,6 @@ function LinkedList () {
   }
 
   const prepend = (value) => {
-    sizeCount += 1;
     newNode = Node(value);
     newNode.nextNode = listHead;
     listHead = newNode;
@@ -35,12 +32,20 @@ function LinkedList () {
   const tail = () => listTail;
 
   const size = () => {
-    return sizeCount;
+    let tempNode = listHead;
+    let listSize = 0;
+    if (tempNode === null) { return 0 };
+    if (tempNode.nextNode === null) { return 1 };
+    while (tempNode != null) {
+      listSize += 1;
+      tempNode = tempNode.nextNode;
+    }
+    return listSize;
   }
 
   const at = (index) => {
     let tempNode = listHead;
-    for (let i = 0; i < index; i++) {
+    for (let i = 1; i < index; i++) {
       if (tempNode.nextNode === null) return 'Non exists.';
       tempNode = tempNode.nextNode;
     }
@@ -61,7 +66,15 @@ function LinkedList () {
     console.log(string, 'null');
   }
 
-  return {append, head, size, toString, prepend, tail, at}
+  const pop = () => {
+    const listSize = size();
+    if (listSize <= 1) return;
+    let tempNode = at(listSize-1);
+    tempNode.nextNode = null;
+    listTail = tempNode;
+  }
+
+  return {append, head, size, toString, prepend, tail, at, pop}
 }
 
 const list = LinkedList();
@@ -72,5 +85,8 @@ list.prepend('Node 3');
 list.toString(); // ( Node 3 ) -> ( Node 1 ) -> ( Node 2 ) -> null
 console.log(list.size()); // 3
 console.log(list.tail()); // { value: 'Node 2', nextNode: null }
-console.log(list.at(2)); // { value: 'Node 2', nextNode: null }
+console.log(list.at(2)); // { value: 'Node 1', ... }
 console.log(list.at(5)); // Non exists.
+list.toString(); // ( Node 3 ) -> ( Node 1 ) -> ( Node 2 ) -> null
+list.pop(); // remove the last Node
+list.toString(); // ( Node 3 ) -> ( Node 1 ) -> null
